@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Interactive Mitosis Process</title>
+        <link rel="stylesheet" href="styles.css" />
+        <!-- Matter.js Physics Engine -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Interactive Mitosis Process</h1>
+            </header>
+
+            <div class="intro">
+                <p>
+                    Mitosis is the process by which eukaryotic cells divide to
+                    produce two identical daughter cells. This interactive
+                    visualization walks you through the five key stages of
+                    mitosis. Click on the tabs to explore each phase, hover over
+                    highlighted points to learn more about specific components,
+                    and use the navigation arrows to move between phases.
+                </p>
+            </div>
+
+            <div class="mitosis-container">
+                <div class="phase-navigation">
+                    <div class="phase-tab active" data-phase="prophase">
+                        Prophase
+                    </div>
+                    <div class="phase-tab" data-phase="prometaphase">
+                        Prometaphase
+                    </div>
+                    <div class="phase-tab" data-phase="metaphase">
+                        Metaphase
+                    </div>
+                    <div class="phase-tab" data-phase="anaphase">Anaphase</div>
+                    <div class="phase-tab" data-phase="telophase">
+                        Telophase & Cytokinesis
+                    </div>
+                </div>
+
+                <div class="phase-content active" id="prophase">
+                    <div class="phase-info">
+                        <div class="phase-text">
+                            <h2>1. Prophase</h2>
+                            <ul>
+                                <li>
+                                    The
+                                    <strong>chromatin (blue)</strong> condenses
+                                    into <strong>chromosomes</strong> inside the
+                                    nucleus.
+                                </li>
+                                <li>
+                                    <strong
+                                        >Centrosomes (yellow with small
+                                        squares)</strong
+                                    >
+                                    begin moving to opposite poles of the cell.
+                                </li>
+                                <li>
+                                    <strong>Microtubules</strong> start forming
+                                    from the centrosomes.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="visualization-container">
+                        <div class="canvas-container">
+                            <canvas id="prophase-canvas"></canvas>
+                            <div
+                                class="highlight-container"
+                                id="prophase-highlights"
+                            ></div>
+                        </div>
+                        <div class="phase-counter">Phase 1 of 5</div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-title">Color Legend:</div>
+                        <div class="legend-item">
+                            <div class="color-box blue"></div>
+                            <div>Chromosomes/Chromatin</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box yellow"></div>
+                            <div>Centrosomes & Spindle Fibers</div>
+                        </div>
+                    </div>
+
+                    <div class="arrows">
+                        <button class="arrow-btn" id="prev-btn" disabled>
+                            Previous
+                        </button>
+                        <button class="arrow-btn" id="next-btn">
+                            Next: Prometaphase
+                        </button>
+                    </div>
+                </div>
+
+                <div class="phase-content" id="prometaphase">
+                    <div class="phase-info">
+                        <div class="phase-text">
+                            <h2>2. Prometaphase</h2>
+                            <ul>
+                                <li>
+                                    The
+                                    <strong>nuclear envelope breaks down</strong
+                                    >.
+                                </li>
+                                <li>
+                                    <strong>Spindle fibers (yellow)</strong>
+                                    extend from the centrosomes and attach to
+                                    the <strong>kinetochores</strong> on
+                                    chromosomes.
+                                </li>
+                                <li>
+                                    The
+                                    <strong>chromosomes (blue strands)</strong>
+                                    start aligning in the center.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="visualization-container">
+                        <div class="canvas-container">
+                            <canvas id="prometaphase-canvas"></canvas>
+                            <div
+                                class="highlight-container"
+                                id="prometaphase-highlights"
+                            ></div>
+                        </div>
+                        <div class="phase-counter">Phase 2 of 5</div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-title">Color Legend:</div>
+                        <div class="legend-item">
+                            <div class="color-box blue"></div>
+                            <div>Chromosomes</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box yellow"></div>
+                            <div>Centrosomes & Spindle Fibers</div>
+                        </div>
+                    </div>
+
+                    <div class="arrows">
+                        <button class="arrow-btn" id="prev-btn">
+                            Previous: Prophase
+                        </button>
+                        <button class="arrow-btn" id="next-btn">
+                            Next: Metaphase
+                        </button>
+                    </div>
+                </div>
+
+                <div class="phase-content" id="metaphase">
+                    <div class="phase-info">
+                        <div class="phase-text">
+                            <h2>3. Metaphase</h2>
+                            <ul>
+                                <li>
+                                    The
+                                    <strong
+                                        >chromosomes align along the metaphase
+                                        plate (center of the cell)</strong
+                                    >.
+                                </li>
+                                <li>
+                                    <strong>Spindle fibers (yellow)</strong>
+                                    from both centrosomes are attached to the
+                                    <strong>kinetochores</strong> of each
+                                    chromosome.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="visualization-container">
+                        <div class="canvas-container">
+                            <canvas id="metaphase-canvas"></canvas>
+                            <div
+                                class="highlight-container"
+                                id="metaphase-highlights"
+                            ></div>
+                        </div>
+                        <div class="phase-counter">Phase 3 of 5</div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-title">Color Legend:</div>
+                        <div class="legend-item">
+                            <div class="color-box blue"></div>
+                            <div>Chromosomes</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box yellow"></div>
+                            <div>Centrosomes & Spindle Fibers</div>
+                        </div>
+                    </div>
+
+                    <div class="arrows">
+                        <button class="arrow-btn" id="prev-btn">
+                            Previous: Prometaphase
+                        </button>
+                        <button class="arrow-btn" id="next-btn">
+                            Next: Anaphase
+                        </button>
+                    </div>
+                </div>
+
+                <div class="phase-content" id="anaphase">
+                    <div class="phase-info">
+                        <div class="phase-text">
+                            <h2>4. Anaphase</h2>
+                            <ul>
+                                <li>
+                                    The
+                                    <strong
+                                        >sister chromatids (blue)
+                                        separate</strong
+                                    >
+                                    and are pulled toward opposite poles.
+                                </li>
+                                <li>
+                                    <strong
+                                        >Mitotic spindle fibers (yellow
+                                        lines)</strong
+                                    >
+                                    contract, guiding the movement.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="visualization-container">
+                        <div class="canvas-container">
+                            <canvas id="anaphase-canvas"></canvas>
+                            <div
+                                class="highlight-container"
+                                id="anaphase-highlights"
+                            ></div>
+                        </div>
+                        <div class="phase-counter">Phase 4 of 5</div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-title">Color Legend:</div>
+                        <div class="legend-item">
+                            <div class="color-box blue"></div>
+                            <div>Chromosomes/Chromatids</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box yellow"></div>
+                            <div>Centrosomes & Spindle Fibers</div>
+                        </div>
+                    </div>
+
+                    <div class="arrows">
+                        <button class="arrow-btn" id="prev-btn">
+                            Previous: Metaphase
+                        </button>
+                        <button class="arrow-btn" id="next-btn">
+                            Next: Telophase & Cytokinesis
+                        </button>
+                    </div>
+                </div>
+
+                <div class="phase-content" id="telophase">
+                    <div class="phase-info">
+                        <div class="phase-text">
+                            <h2>5. Telophase & Cytokinesis</h2>
+                            <ul>
+                                <li>
+                                    <strong>Two new nuclei form</strong>, each
+                                    containing a complete set of chromosomes.
+                                </li>
+                                <li>
+                                    The <strong>midbody ring</strong> appears,
+                                    which helps in final separation.
+                                </li>
+                                <li>
+                                    The
+                                    <strong>cell membrane pinches in</strong>,
+                                    completing cytokinesis and forming
+                                    <strong>two identical daughter cells</strong
+                                    >.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="visualization-container">
+                        <div class="canvas-container">
+                            <canvas id="telophase-canvas"></canvas>
+                            <div
+                                class="highlight-container"
+                                id="telophase-highlights"
+                            ></div>
+                        </div>
+                        <div class="phase-counter">Phase 5 of 5</div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-title">Color Legend:</div>
+                        <div class="legend-item">
+                            <div class="color-box blue"></div>
+                            <div>Chromosomes</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="color-box yellow"></div>
+                            <div>Centrosomes & Midbody Ring</div>
+                        </div>
+                    </div>
+
+                    <div class="arrows">
+                        <button class="arrow-btn" id="prev-btn">
+                            Previous: Anaphase
+                        </button>
+                        <button class="arrow-btn" id="next-btn" disabled>
+                            Process Complete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tooltip" id="tooltip"></div>
+
+        <script src="main.js"></script>
+        <script src="phases/prophase.js"></script>
+        <script src="phases/prometaphase.js"></script>
+        <script src="phases/metaphase.js"></script>
+        <script src="phases/anaphase.js"></script>
+        <script src="phases/telophase.js"></script>
+    </body>
+</html>

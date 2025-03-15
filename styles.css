@@ -1,0 +1,221 @@
+body {
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #4a86e8;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0;
+}
+
+.intro {
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.mitosis-container {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.phase-navigation {
+    display: flex;
+    background-color: #e6f2ff;
+    border-bottom: 1px solid #d1e0ff;
+}
+
+.phase-tab {
+    flex: 1;
+    padding: 15px 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    border-bottom: 3px solid transparent;
+}
+
+.phase-tab.active {
+    background-color: #fff;
+    border-bottom: 3px solid #4a86e8;
+    color: #4a86e8;
+}
+
+.phase-content {
+    display: none;
+    padding: 20px;
+}
+
+.phase-content.active {
+    display: block;
+}
+
+.phase-info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+    .phase-info {
+        flex-direction: row;
+    }
+}
+
+.phase-text {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.phase-text h2 {
+    color: #4a86e8;
+    margin-top: 0;
+}
+
+.visualization-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.canvas-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.highlight-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.highlight-point {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 2px solid #ff6347;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 200px;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.phase-counter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4a86e8;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.legend {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.legend-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.color-box {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #333;
+}
+
+.blue {
+    background-color: #4a86e8;
+}
+
+.yellow {
+    background-color: #ffcc00;
+}
+
+.arrows {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.arrow-btn {
+    padding: 10px 20px;
+    background-color: #4a86e8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.arrow-btn:hover {
+    background-color: #3a76d8;
+}
+
+.arrow-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
