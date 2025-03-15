@@ -5,6 +5,7 @@ let anaphaseRender;
 let anaphaseRunner;
 let anaphaseAnimationStarted = false;
 let anaphaseChromosomes = [];
+let anaphaseCentrosomes = [];
 
 // Function to create a circular boundary using a chain of small bodies
 function createCellBoundary(x, y, radius, world) {
@@ -112,43 +113,90 @@ function initAnaphase() {
   );
   Matter.World.add(anaphaseWorld, metaphasePlate);
 
-  // Add centrosomes
+  // Add centrosomes as dynamic bodies (like in prophase and prometaphase)
   const centrosome1 = Matter.Bodies.circle(
     cellCenter.x - cellRadius * 0.7,
-    cellCenter.y - cellRadius * 0.5,
+    cellCenter.y - cellRadius * 0.1,
     10,
     {
-      isStatic: true,
+      isStatic: false,
       render: {
         fillStyle: "#ffcc00",
         strokeStyle: "#e6b800",
         lineWidth: 2,
       },
+      frictionAir: 0.1, // For smoother movement
     },
   );
 
   const centrosome2 = Matter.Bodies.circle(
     cellCenter.x + cellRadius * 0.7,
-    cellCenter.y - cellRadius * 0.5,
+    cellCenter.y - cellRadius * 0.1,
     10,
     {
-      isStatic: true,
+      isStatic: false,
       render: {
         fillStyle: "#ffcc00",
         strokeStyle: "#e6b800",
         lineWidth: 2,
       },
+      frictionAir: 0.1, // For smoother movement
     },
   );
 
+  anaphaseCentrosomes = [centrosome1, centrosome2];
   Matter.World.add(anaphaseWorld, [centrosome1, centrosome2]);
+
+  // Define target positions for centrosomes
+  const targetPos1 = {
+    x: cellCenter.x - cellRadius * 0.8,
+    y: cellCenter.y - cellRadius * 0.1,
+  };
+
+  const targetPos2 = {
+    x: cellCenter.x + cellRadius * 0.8,
+    y: cellCenter.y - cellRadius * 0.1,
+  };
+
+  // Add force to maintain centrosome positions
+  Matter.Events.on(anaphaseEngine, "beforeUpdate", function () {
+    // Apply force to first centrosome to maintain position
+    const force1X = targetPos1.x - centrosome1.position.x;
+    const force1Y = targetPos1.y - centrosome1.position.y;
+    const mag1 = Math.sqrt(force1X * force1X + force1Y * force1Y);
+
+    if (mag1 > 1) {
+      // Only apply force if not very close to target
+      const normalizedForce1X = force1X / mag1;
+      const normalizedForce1Y = force1Y / mag1;
+      Matter.Body.applyForce(centrosome1, centrosome1.position, {
+        x: normalizedForce1X * 0.00005,
+        y: normalizedForce1Y * 0.00005,
+      });
+    }
+
+    // Apply force to second centrosome to maintain position
+    const force2X = targetPos2.x - centrosome2.position.x;
+    const force2Y = targetPos2.y - centrosome2.position.y;
+    const mag2 = Math.sqrt(force2X * force2X + force2Y * force2Y);
+
+    if (mag2 > 1) {
+      // Only apply force if not very close to target
+      const normalizedForce2X = force2X / mag2;
+      const normalizedForce2Y = force2Y / mag2;
+      Matter.Body.applyForce(centrosome2, centrosome2.position, {
+        x: normalizedForce2X * 0.00005,
+        y: normalizedForce2Y * 0.00005,
+      });
+    }
+  });
 
   // Create chromosomes aligned vertically at metaphase plate (just like in metaphase)
   const chromosomes = [];
   const spacing = (cellRadius * 1.2) / 7;
 
   for (let i = 0; i < 6; i++) {
-    const chromosomeY = cellCenter.y - cellRadius * 0.5 + i * spacing;
+    const chromosomeY = cellCenter.y - cellRadius * 0.3 + i * spacing;
 
     // Create chromosome pair
     const leftChromosome = Matter.Bodies.rectangle(
@@ -254,6 +302,9 @@ function initAnaphase() {
     ]);
   }
 
+  // Store chromosomes for use in other functions
+  anaphaseChromosomes = chromosomes;
+
   // Schedule removal of center constraints after a few seconds to allow springs to take over
   setTimeout(() => {
     chromosomes.forEach((pair) => {
@@ -298,12 +349,6 @@ function initAnaphase() {
       ctx.stroke();
     });
 
-    // Draw just one main spindle fiber from pole to pole
-    ctx.beginPath();
-    ctx.moveTo(centrosome1.position.x, centrosome1.position.y);
-    ctx.lineTo(centrosome2.position.x, centrosome2.position.y);
-    ctx.stroke();
-
     // Draw the beginning of a cleavage furrow
     ctx.strokeStyle = "rgba(51, 51, 51, 0.4)";
     ctx.lineWidth = 2;
@@ -315,6 +360,38 @@ function initAnaphase() {
     ctx.stroke();
 
     ctx.setLineDash([]);
+
+    // Draw radiating microtubules from centrosomes (like in prophase and prometaphase)
+    ctx.strokeStyle = "rgba(255, 204, 0, 0.4)";
+    ctx.lineWidth = 1;
+
+    // Draw radiating microtubules from centrosomes
+    const numRays = 16;
+    const rayLength = cellRadius * 0.3;
+
+    // Draw microtubules from first centrosome
+    for (let i = 0; i < numRays; i++) {
+      const angle = ((Math.PI * 2) / numRays) * i;
+      ctx.beginPath();
+      ctx.moveTo(centrosome1.position.x, centrosome1.position.y);
+      ctx.lineTo(
+        centrosome1.position.x + Math.cos(angle) * rayLength,
+        centrosome1.position.y + Math.sin(angle) * rayLength,
+      );
+      ctx.stroke();
+    }
+
+    // Draw microtubules from second centrosome
+    for (let i = 0; i < numRays; i++) {
+      const angle = ((Math.PI * 2) / numRays) * i;
+      ctx.beginPath();
+      ctx.moveTo(centrosome2.position.x, centrosome2.position.y);
+      ctx.lineTo(
+        centrosome2.position.x + Math.cos(angle) * rayLength,
+        centrosome2.position.y + Math.sin(angle) * rayLength,
+      );
+      ctx.stroke();
+    }
   });
 
   // Start the renderer
@@ -367,6 +444,8 @@ function cleanupAnaphase() {
     anaphaseWorld = null;
     anaphaseEngine = null;
     anaphaseRunner = null;
+    anaphaseChromosomes = [];
+    anaphaseCentrosomes = [];
   }
 }
 

@@ -3,6 +3,7 @@ let prometaphaseEngine;
 let prometaphaseWorld;
 let prometaphaseRender;
 let prometaphaseRunner;
+let prometaphaseCentrosomes = [];
 
 // Function to create a circular boundary using a chain of small bodies
 function createCellBoundary(x, y, radius, world) {
@@ -91,36 +92,83 @@ function initPrometaphase() {
     prometaphaseWorld,
   );
 
-  // Add centrosomes
+  // Add centrosomes at opposite poles (similar to end of prophase)
   const centrosome1 = Matter.Bodies.circle(
     cellCenter.x - cellRadius * 0.7,
-    cellCenter.y - cellRadius * 0.5,
+    cellCenter.y,
     10,
     {
-      isStatic: true,
+      isStatic: false, // Make it dynamic for smoother animation
       render: {
         fillStyle: "#ffcc00",
         strokeStyle: "#e6b800",
         lineWidth: 2,
       },
+      frictionAir: 0.1,
     },
   );
 
   const centrosome2 = Matter.Bodies.circle(
     cellCenter.x + cellRadius * 0.7,
-    cellCenter.y - cellRadius * 0.5,
+    cellCenter.y,
     10,
     {
-      isStatic: true,
+      isStatic: false, // Make it dynamic for smoother animation
       render: {
         fillStyle: "#ffcc00",
         strokeStyle: "#e6b800",
         lineWidth: 2,
       },
+      frictionAir: 0.1,
     },
   );
 
+  prometaphaseCentrosomes = [centrosome1, centrosome2];
   Matter.World.add(prometaphaseWorld, [centrosome1, centrosome2]);
+
+  // Define target positions at opposite poles
+  const targetPos1 = {
+    x: cellCenter.x - cellRadius * 0.8,
+    y: cellCenter.y,
+  };
+
+  const targetPos2 = {
+    x: cellCenter.x + cellRadius * 0.8,
+    y: cellCenter.y,
+  };
+
+  // Add an event to keep centrosomes at their positions
+  Matter.Events.on(prometaphaseEngine, "beforeUpdate", function () {
+    // Apply force to first centrosome to maintain position
+    const force1X = targetPos1.x - centrosome1.position.x;
+    const force1Y = targetPos1.y - centrosome1.position.y;
+    const mag1 = Math.sqrt(force1X * force1X + force1Y * force1Y);
+
+    if (mag1 > 1) {
+      // Only apply force if not very close to target
+      const normalizedForce1X = force1X / mag1;
+      const normalizedForce1Y = force1Y / mag1;
+      Matter.Body.applyForce(centrosome1, centrosome1.position, {
+        x: normalizedForce1X * 0.00005,
+        y: normalizedForce1Y * 0.00005,
+      });
+    }
+
+    // Apply force to second centrosome to maintain position
+    const force2X = targetPos2.x - centrosome2.position.x;
+    const force2Y = targetPos2.y - centrosome2.position.y;
+    const mag2 = Math.sqrt(force2X * force2X + force2Y * force2Y);
+
+    if (mag2 > 1) {
+      // Only apply force if not very close to target
+      const normalizedForce2X = force2X / mag2;
+      const normalizedForce2Y = force2Y / mag2;
+      Matter.Body.applyForce(centrosome2, centrosome2.position, {
+        x: normalizedForce2X * 0.00005,
+        y: normalizedForce2Y * 0.00005,
+      });
+    }
+  });
 
   // Create chromosomes that are initially distributed throughout the cell
   const chromosomes = [];
@@ -187,7 +235,7 @@ function initPrometaphase() {
     });
   });
 
-  // Draw spindle fibers and nuclear envelope fragments (using Matter.js Render.afterRender)
+  // Draw spindle fibers, nuclear envelope fragments, and microtubules
   Matter.Events.on(prometaphaseRender, "afterRender", function () {
     const ctx = prometaphaseRender.context;
 
@@ -227,6 +275,38 @@ function initPrometaphase() {
         cellRadius * 0.5,
         startAngle,
         endAngle,
+      );
+      ctx.stroke();
+    }
+
+    // Draw radiating microtubules from centrosomes (like in prophase)
+    ctx.strokeStyle = "rgba(255, 204, 0, 0.4)";
+    ctx.lineWidth = 1;
+
+    // Draw radiating microtubules from centrosomes
+    const numRays = 16;
+    const rayLength = cellRadius * 0.3;
+
+    // Draw microtubules from first centrosome
+    for (let i = 0; i < numRays; i++) {
+      const angle = ((Math.PI * 2) / numRays) * i;
+      ctx.beginPath();
+      ctx.moveTo(centrosome1.position.x, centrosome1.position.y);
+      ctx.lineTo(
+        centrosome1.position.x + Math.cos(angle) * rayLength,
+        centrosome1.position.y + Math.sin(angle) * rayLength,
+      );
+      ctx.stroke();
+    }
+
+    // Draw microtubules from second centrosome
+    for (let i = 0; i < numRays; i++) {
+      const angle = ((Math.PI * 2) / numRays) * i;
+      ctx.beginPath();
+      ctx.moveTo(centrosome2.position.x, centrosome2.position.y);
+      ctx.lineTo(
+        centrosome2.position.x + Math.cos(angle) * rayLength,
+        centrosome2.position.y + Math.sin(angle) * rayLength,
       );
       ctx.stroke();
     }
@@ -284,6 +364,7 @@ function cleanupPrometaphase() {
     prometaphaseWorld = null;
     prometaphaseEngine = null;
     prometaphaseRunner = null;
+    prometaphaseCentrosomes = [];
   }
 }
 
