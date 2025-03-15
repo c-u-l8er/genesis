@@ -6,6 +6,61 @@ body {
     color: #333;
 }
 
+.header {
+    background: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0;
+    z-index: 1000; /* Ensure header stays on top */
+
+    font-family:
+        Courier New,
+        monospace;
+}
+
+.enter {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #000;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.domain-nav {
+    background: #000;
+    color: #ccc;
+    margin-bottom: 0;
+}
+
+.domain-container {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 4px;
+    font-size: 16px;
+    text-align: left;
+}
+
+.domain-nav a {
+    color: #ccc !important;
+    font-size: 1em !important;
+    font-weight: normal !important;
+    margin: 0 !important;
+}
+
+.domain-nav a:hover {
+    color: #fff !important;
+    text-decoration: underline;
+}
+
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -218,4 +273,63 @@ canvas {
 .arrow-btn:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
+}
+
+.app-parallel {
+    background-color: rgba(74, 134, 232, 0.1);
+    padding: 12px 15px;
+    border-left: 3px solid #4a86e8;
+    margin-top: 15px;
+    border-radius: 0 5px 5px 0;
+}
+
+.app-parallel h3 {
+    margin-top: 0;
+    color: #4a86e8;
+    font-size: 16px;
+}
+
+.app-parallel p {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+footer {
+    padding: 1em 0;
+    text-align: center;
+    color: #555;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+footer p {
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+footer a {
+    color: #4a86e8;
+    font-weight: bold;
+    text-decoration: underline;
+    transition: all 0.3s;
+}
+
+footer a:hover {
+    color: #3a76d8;
+}
+
+.copyright {
+    margin: 1em 0 2em;
+    font-size: 14px;
+    color: #888;
+    text-align: center;
+}
+
+.copyright a {
+    color: #444;
 }

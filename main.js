@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("current-year").textContent =
+    new Date().getFullYear();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
   // Phase navigation
   const phaseTabs = document.querySelectorAll(".phase-tab");
   const phaseContents = document.querySelectorAll(".phase-content");

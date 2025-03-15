@@ -180,7 +180,7 @@ function initTelophase() {
   // Add centrosomes to each side
   const leftCentrosome1 = Matter.Bodies.circle(
     leftCellCenter.x - cellRadius * 0.4,
-    leftCellCenter.y - cellRadius * 0.3,
+    leftCellCenter.y - cellRadius * 0.7, // Moved 10px closer to nucleus
     8,
     {
       isStatic: false,
@@ -194,8 +194,8 @@ function initTelophase() {
   );
 
   const leftCentrosome2 = Matter.Bodies.circle(
-    leftCellCenter.x,
-    leftCellCenter.y - cellRadius * 0.3,
+    leftCellCenter.x + cellRadius * 0.4,
+    leftCellCenter.y - cellRadius * 0.7, // Moved 10px closer to nucleus
     8,
     {
       isStatic: false,
@@ -209,8 +209,8 @@ function initTelophase() {
   );
 
   const rightCentrosome1 = Matter.Bodies.circle(
-    rightCellCenter.x,
-    rightCellCenter.y - cellRadius * 0.3,
+    rightCellCenter.x - cellRadius * 0.4,
+    rightCellCenter.y - cellRadius * 0.7, // Moved 10px closer to nucleus
     8,
     {
       isStatic: false,
@@ -225,7 +225,7 @@ function initTelophase() {
 
   const rightCentrosome2 = Matter.Bodies.circle(
     rightCellCenter.x + cellRadius * 0.4,
-    rightCellCenter.y - cellRadius * 0.3,
+    rightCellCenter.y - cellRadius * 0.7, // Moved 10px closer to nucleus
     8,
     {
       isStatic: false,
