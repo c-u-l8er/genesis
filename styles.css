@@ -3,7 +3,142 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f8ff;
-    color: #333;
+    color: #000;
+}
+
+.light-rays {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 80px);
+    background: #f0f8ff;
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.top-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75vh;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    z-index: -1;
+}
+
+.light-ray {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    filter: blur(15px);
+    transform-origin: top center;
+    background: linear-gradient(
+        to bottom,
+        #4a86e8 0%,
+        rgba(74, 134, 232, 0.5) 30%,
+        rgba(74, 134, 232, 0.1) 50%,
+        rgba(74, 134, 232, 0) 70%
+    );
+}
+
+.light-ray:nth-child(1) {
+    left: 5%;
+    width: 45px;
+    transform: rotateX(10deg) rotateY(-5deg);
+}
+
+.light-ray:nth-child(2) {
+    left: 8%;
+    width: 70px;
+    transform: rotateX(12deg) rotateY(2deg);
+}
+
+.light-ray:nth-child(3) {
+    left: 24%;
+    width: 55px;
+    transform: rotateX(8deg) rotateY(-1deg);
+}
+
+.light-ray:nth-child(4) {
+    left: 35%;
+    width: 80px;
+    transform: rotateX(11deg) rotateY(3deg);
+}
+
+.light-ray:nth-child(5) {
+    left: 44%;
+    width: 40px;
+    transform: rotateX(9deg) rotateY(-2deg);
+}
+
+.light-ray:nth-child(6) {
+    left: 52%;
+    width: 65px;
+    transform: rotateX(10deg) rotateY(1deg);
+}
+
+.light-ray:nth-child(7) {
+    left: 62%;
+    width: 50px;
+    transform: rotateX(12deg) rotateY(-3deg);
+}
+
+.light-ray:nth-child(8) {
+    left: 71%;
+    width: 75px;
+    transform: rotateX(9deg) rotateY(2deg);
+}
+
+.light-ray:nth-child(9) {
+    left: 83%;
+    width: 60px;
+    transform: rotateX(11deg) rotateY(-1deg);
+}
+
+.light-ray:nth-child(10) {
+    left: 94%;
+    width: 65px;
+    transform: rotateX(8deg) rotateY(3deg);
+}
+
+.light-ray:nth-child(11) {
+    left: 18%;
+    width: 55px;
+    transform: rotateX(10deg) rotateY(0deg);
+}
+
+.light-ray:nth-child(12) {
+    left: 30%;
+    width: 40px;
+    transform: rotateX(11deg) rotateY(-2deg);
+}
+
+.light-ray:nth-child(13) {
+    left: 57%;
+    width: 70px;
+    transform: rotateX(9deg) rotateY(1deg);
+}
+
+.light-ray:nth-child(14) {
+    left: 76%;
+    width: 50px;
+    transform: rotateX(12deg) rotateY(-1deg);
+}
+
+.light-ray:nth-child(15) {
+    left: 88%;
+    width: 35px;
+    transform: rotateX(8deg) rotateY(2deg);
+}
+
+.content {
+    position: relative;
+    z-index: 5;
 }
 
 .header {
@@ -68,6 +203,7 @@ a {
 }
 
 header {
+    border: 5px solid rgba(0, 0, 0, 0.5);
     text-align: center;
     padding: 20px 0;
     background-color: #4a86e8;
